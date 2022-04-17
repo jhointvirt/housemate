@@ -12,4 +12,14 @@ class Api::V1::AuthController < ApplicationController
 
     render json: tokens, status: :ok
   end
+
+  def refresh
+    @tokens = @jwt_service.refresh(params)
+
+    if @tokens[:not_refresh?]
+      return render json: { refresh_token: params[:tokens][:refresh_token], message: @tokens[:message] }, status: :conflict
+    end
+
+    render json: @tokens, status: :ok
+  end
 end
