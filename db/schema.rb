@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_17_074700) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_17_191619) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "profiles", force: :cascade do |t|
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.text "description"
+    t.date "birthday_date", null: false
+    t.boolean "gender", null: false
+    t.boolean "is_verified", default: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
 
   create_table "refresh_tokens", force: :cascade do |t|
     t.string "refresh_token"
@@ -30,5 +43,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_17_074700) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "profiles", "users"
   add_foreign_key "refresh_tokens", "users"
 end
