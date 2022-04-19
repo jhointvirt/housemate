@@ -8,7 +8,6 @@ RSpec.describe Profile, type: :model do
       last_name: Faker::Name.last_name,
       birthday_date: Date.today,
       gender: true)
-      p @profile.valid?
   end
 
   it "is valid with valid attributes" do

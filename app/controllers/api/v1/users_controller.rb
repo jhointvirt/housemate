@@ -1,11 +1,18 @@
 class Api::V1::UsersController < ApplicationController
   def create
-    user = User.find_by(email: params[:user][:email])
-    if user
+    @user = User.find_by(email: params[:user][:email])
+    if @user
       return render json: params[:user][:email], status: :conflict
     end
 
-    render json: User.create(user_params), status: :ok
+    @created_user = User.create(user_params)
+    @created_user.create_profile(
+      first_name: Faker::Name.first_name + ' - EXAMPLE',
+      last_name: Faker::Name.last_name + '  - EXAMPLE',
+      birthday_date: Date.today,
+      gender: true)
+
+    render json: @created_user, status: :ok
   end
   
   private
