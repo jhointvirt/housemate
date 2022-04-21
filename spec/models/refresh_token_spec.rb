@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe RefreshToken, type: :model do
-  before(:all) do 
+  before(:each) do 
     @user = User.create(email: Faker::Internet.email, password: 'StrongPass')
     @payload = {
       data: { email: @user.email, id: @user.id },

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Profile, type: :model do
-  before(:all) do
+  before(:each) do
     @user = User.create(email: Faker::Internet.email, password: 'StrongPass')
     @profile = @user.build_profile(
       first_name: Faker::Name.first_name,
