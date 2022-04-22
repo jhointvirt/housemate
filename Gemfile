@@ -38,6 +38,7 @@ gem "bootsnap", require: false
 # gem "rack-cors"
 
 group :development, :test do
+  gem 'database_cleaner-active_record'
   gem "rspec-rails"
   gem "faker"
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
