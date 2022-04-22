@@ -1,5 +1,5 @@
 class RentedAccommodation < ApplicationRecord
-  belongs_to :user
+  belongs_to :profile
   validates_numericality_of :latitude
   validates_numericality_of :longitude
   validates_numericality_of :cost

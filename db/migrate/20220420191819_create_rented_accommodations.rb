@@ -7,7 +7,7 @@ class CreateRentedAccommodations < ActiveRecord::Migration[7.0]
       t.decimal :cost, null: false
       t.decimal :longitude, null: false
       t.decimal :latitude, null: false
-      t.references :user, null: false, foreign_key: true
+      t.references :profile, null: false, foreign_key: true
 
       t.timestamps
     end

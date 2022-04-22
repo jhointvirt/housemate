@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe RentedAccommodation, type: :model do
   before(:each) do
-    @user = User.create(email: Faker::Internet.email, password: 'StrongPass')
+    @user = create_user_with_profile
+    @profile = Profile.find_by(user_id: @user.id)
+    
     @rented_accommodation = RentedAccommodation.new(
       title: 'Random title',
       description: 'Random description',
@@ -10,7 +12,7 @@ RSpec.describe RentedAccommodation, type: :model do
       cost: 400.0,
       longitude: 80.0,
       latitude: 80.0,
-      user_id: @user.id)
+      profile_id: @profile.id)
   end
 
   it "is valid with valid attributes" do

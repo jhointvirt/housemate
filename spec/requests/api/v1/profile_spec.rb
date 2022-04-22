@@ -18,7 +18,7 @@ RSpec.describe "Api::V1::Profiles", type: :request do
     expect(response.status).to eq(401)
   end
 
-  it "returns status 403 unautorized" do
+  it "returns status 403" do
     @headers = { "Authorization": "Bearer " + get_access_token(create_user_with_profile) }
     @profile = Profile.find_by(user_id: create_and_get_current_user_with_access_token[:user][:id])
     put '/api/v1/profile/' + @profile[:id].to_s, :headers => @headers

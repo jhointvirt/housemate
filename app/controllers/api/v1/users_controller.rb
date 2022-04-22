@@ -12,7 +12,11 @@ class Api::V1::UsersController < ApplicationController
       birthday_date: Date.today,
       gender: true)
 
-    render json: @created_user, status: :ok
+    if @created_user.errors.empty?
+      render json: @created_user, status: :ok
+    else
+      render json: @created_user.errors, status: :conflict
+    end
   end
   
   private
