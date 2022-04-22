@@ -1,6 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe "Api::V1::RentedAccommodations", type: :request do
+  it "returns status 200 when get all (index)" do
+    @rented_accommodation_first = generate_rented_accommodation
+    @rented_accommodation_second = generate_rented_accommodation
+    @all = RentedAccommodation.all
+
+    get '/api/v1/rented_accommodation'
+    expect(response.status).to eq(200)
+    expect(response.body).to eq(@all.to_json)
+  end
+
+  it "returns status 200 when get by id (show)" do
+    @rented_accommodation = generate_rented_accommodation
+
+    get '/api/v1/rented_accommodation/' + @rented_accommodation[:id].to_s
+    expect(response.status).to eq(200)
+    expect(response.body).to eq(@rented_accommodation.to_json)
+  end
+
   it "returns status 200 when create" do
     @user = create_user_with_profile
     @headers = { "Authorization": "Bearer " + get_access_token(@user) }

@@ -1,5 +1,13 @@
 class Api::V1::RentedAccommodationController < ApplicationController
-  before_action :current_user
+  before_action :current_user, except: [:index, :show]
+
+  def index
+    render json: RentedAccommodation.all, status: :ok
+  end
+
+  def show
+    render json: RentedAccommodation.find(params[:id]), status: :ok
+  end
 
   def create
     @rented_accommodation = RentedAccommodation.new(rented_accommodation_params)
