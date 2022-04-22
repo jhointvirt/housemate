@@ -11,11 +11,11 @@ class Api::V1::ProfileController < ApplicationController
       return render json: { message: "You don't have a permission" }, status: :forbidden
     end
 
-    @result = Profile.update(profile_params)
+    @result = @profile.update(profile_params)
     if @result
-      render json: @result, status: 200
+      render json: @result, status: :ok
     else
-      render json: @result, status: 400
+      render json: @result, status: :bad_request
     end
   end
 

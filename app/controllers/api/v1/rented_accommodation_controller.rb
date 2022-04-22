@@ -2,15 +2,28 @@ class Api::V1::RentedAccommodationController < ApplicationController
   before_action :current_user
 
   def create
-    @rented_accommodation = rented_accommodation_params
-    @rented_accommodation[:profile_id] = current_profile.user_id
-    
-    @rented_accommodation = RentedAccommodation.create(@rented_accommodation)
+    @rented_accommodation = RentedAccommodation.new(rented_accommodation_params)
+    @rented_accommodation.profile_id = current_profile.id
+    @rented_accommodation.save
 
     if @rented_accommodation.errors.empty?
       render json: @rented_accommodation, status: :ok
     else
-      render json: @rented_accommodation.errors, status: :conflict
+      render json: @rented_accommodation.errors, status: :bad_request
+    end
+  end
+
+  def update
+    @rented_accommodation = RentedAccommodation.find(params[:id])
+    unless @rented_accommodation[:profile_id] != current_profile.id
+      return render json: { message: "You don't have a permission" }, status: :forbidden
+    end
+
+    @result = @rented_accommodation.update(rented_accommodation_params)
+    if @result
+      render json: @result, status: :ok
+    else
+      render json: @result, status: :bad_request
     end
   end
 

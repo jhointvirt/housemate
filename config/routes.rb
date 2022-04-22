@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get 'profile/show_by_current_user', to: 'profile#show_by_current_user'
 
       put 'profile/:id', to: 'profile#update'
+      put 'rented_accommodation/:id', to: 'rented_accommodation#update'
     end
   end
 end

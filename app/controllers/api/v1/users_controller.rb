@@ -2,7 +2,7 @@ class Api::V1::UsersController < ApplicationController
   def create
     @user = User.find_by(email: params[:user][:email])
     if @user
-      return render json: params[:user][:email], status: :conflict
+      return render json: params[:user][:email], status: :bad_request
     end
 
     @created_user = User.create(user_params)
@@ -15,7 +15,7 @@ class Api::V1::UsersController < ApplicationController
     if @created_user.errors.empty?
       render json: @created_user, status: :ok
     else
-      render json: @created_user.errors, status: :conflict
+      render json: @created_user.errors, status: :bad_request
     end
   end
   

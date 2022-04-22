@@ -5,20 +5,20 @@ RSpec.describe "Api::V1::Auths", type: :request do
     User.create(email: 'example@example.com', password: 'StrongPass')
   end
 
-  it "returns tokens and 200 status code" do
+  it "returns tokens and 200 status code when login" do
     user = { user: { email: 'example@example.com', password: 'StrongPass' } }
     post '/api/v1/auth/login', :params => user
     expect(response.status).to eq(200)
   end
 
-  it "returns email and 404 status code" do
+  it "returns email and 404 status code when login" do
     user = { user: { email: 'ex@ex.com', password: 'StrongPass' } }
     post '/api/v1/auth/login', :params => user
     expect(response.status).to eq(404)
     expect(response.body).to eq(user[:user][:email])
   end
 
-  it "returns new tokens and 200 status code" do
+  it "returns new tokens and 200 status code when refresh" do
     user = { user: { email: 'example@example.com', password: 'StrongPass' } }
     post '/api/v1/auth/login', :params => user
     expect(response.status).to eq(200)
@@ -26,7 +26,7 @@ RSpec.describe "Api::V1::Auths", type: :request do
     expect(response.status).to eq(200)
   end
 
-  it "returns refresh token and message and 409 status code" do
+  it "returns refresh token and message and 409 status code when login" do
     user = { user: { email: 'example@example.com', password: 'StrongPass' } }
     post '/api/v1/auth/login', :params => user
     expect(response.status).to eq(200)
@@ -34,7 +34,7 @@ RSpec.describe "Api::V1::Auths", type: :request do
     body = JSON.parse(response.body)
     body['refresh_token'] = body['refresh_token'].to_s.chop
     post '/api/v1/auth/refresh', :params => { tokens: body }
-    expect(response.status).to eq(409)
+    expect(response.status).to eq(400)
 
     body = JSON.parse(response.body)
     expect(body['message']).to eq('Verification error')
