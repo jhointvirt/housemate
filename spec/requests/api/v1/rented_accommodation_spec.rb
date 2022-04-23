@@ -137,6 +137,21 @@ RSpec.describe "Api::V1::RentedAccommodations", type: :request do
     expect(@body['exception']).to eq("Unauthorized")
   end
 
+  it "returns status 200 when new" do
+    @user = create_user_with_profile
+    @headers = { "Authorization": "Bearer " + get_access_token(@user) }
+
+    post '/api/v1/rented_accommodation/new', :headers => @headers, :params => { longitude: 28.432478900156728, latitude: 49.230942410934205 }
+    expect(response.status).to eq(200)
+    @body = JSON.parse(response.body)
+    expect(@body['address']).to eq('26, Liali Ratushnoi Street, Slovyanka, Vinnytsia, Vinnytsia Urban Hromada, Vinnytsia Raion, Vinnytsia Oblast, 21036, Ukraine')
+    expect(@body['city']).to eq('Vinnytsia')
+    expect(@body['country_code']).to eq('ua')
+    expect(@body['country']).to eq('Ukraine')
+    expect(@body['longitude']).to eq('28.43220800399061')
+    expect(@body['latitude']).to eq('49.2310982')
+  end
+
   private 
 
   def generate_rented_accommodation

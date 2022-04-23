@@ -1,10 +1,32 @@
 require './app/filters/rented_accommodation_module.rb'
 class Api::V1::RentedAccommodationController < ApplicationController
-  before_action :current_user, except: [:index, :show]
+  before_action :current_user, except: [:index, :show, :new]
   include RentedAccommodationModule
+  attr_accessor :map
+
+  def initialize
+    super
+    @map = OpenStreetMap::Client.new
+  end
 
   def index
     render json: RentedAccommodationModule::Filter.new(nil, params).execute, status: :ok
+  end
+  
+  def new
+    @details_information = map.reverse(format: 'json', lat: params[:latitude], lon: params[:longitude], accept_language: 'en')
+
+    return render json: RentedAccommodation.new if @details_information['error'] || !@details_information
+    
+    render json: RentedAccommodation.new(
+      address: @details_information['display_name'],
+      latitude: @details_information['lat'],
+      longitude: @details_information['lon'],
+      house_number: @details_information['address']['house_number'],
+      city: @details_information['address']['city'],
+      country: @details_information['address']['country'],
+      country_code: @details_information['address']['country_code']
+    )
   end
 
   def show
@@ -26,7 +48,7 @@ class Api::V1::RentedAccommodationController < ApplicationController
   def update
     @rented_accommodation = RentedAccommodation.find(params[:id])
     unless @rented_accommodation[:profile_id] != current_profile.id
-      return render json: { message: "You don't have a permission" }, status: :forbidden
+      return render json: { message: 'Access denied' }, status: :forbidden
     end
 
     @result = @rented_accommodation.update(rented_accommodation_params)
@@ -40,6 +62,6 @@ class Api::V1::RentedAccommodationController < ApplicationController
   private
 
   def rented_accommodation_params
-    params.require(:rented_accommodation).permit(:title, :description, :address, :cost, :longitude, :latitude, :profile_id)
+    params.require(:rented_accommodation).permit(:title, :description, :address, :cost, :longitude, :latitude, :house_number, :city, :country, :country_code, :profile_id)
   end
 end
