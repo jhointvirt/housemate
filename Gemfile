@@ -36,6 +36,7 @@ gem "bootsnap", require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem "rack-cors"
+gem 'open_street_map'
 
 group :development, :test do
   gem 'database_cleaner-active_record'
