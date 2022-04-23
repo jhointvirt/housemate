@@ -20,13 +20,13 @@ module RentedAccommodationModule
     def where_cost_more(accommodations)
       return accommodations unless params[:cost_more]
 
-      accommodations.where("cost > ?", params[:cost_more])
+      accommodations.where("cost >= ?", params[:cost_more])
     end
 
     def where_cost_less(accommodations)
       return accommodations unless params[:cost_less]
 
-      accommodations.where("cost < ?", params[:cost_less])
+      accommodations.where("cost <= ?", params[:cost_less])
     end
 
     def where_adress_like(accommodations)

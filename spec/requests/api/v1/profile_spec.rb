@@ -36,7 +36,7 @@ RSpec.describe "Api::V1::Profiles", type: :request do
     put '/api/v1/profile/' + @profile[:id].to_s, :headers => @headers
     expect(response.status).to eq(403)
     @body = JSON.parse(response.body)
-    expect(@body['message']).to eq("You don't have a permission")
+    expect(@body['message']).to eq("Access denied")
   end
 
   it "returns status 400 with invalid params when update" do

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Api::V1::RentedAccommodations", type: :request do
-  it "returns status 200 when get all (index)" do
+  it "returns status 200 when get all (index) without filter" do
     @rented_accommodation_first = generate_rented_accommodation
     @rented_accommodation_second = generate_rented_accommodation
     @all = RentedAccommodation.all
@@ -9,6 +9,23 @@ RSpec.describe "Api::V1::RentedAccommodations", type: :request do
     get '/api/v1/rented_accommodation'
     expect(response.status).to eq(200)
     expect(response.body).to eq(@all.to_json)
+  end
+
+  it "returns status 200 when get all (index) with filters" do
+    30.times do
+      generate_rented_accommodation
+    end
+    @all = RentedAccommodation.all
+    @cost_more = @all.where("cost >= ?", 700)
+    @cost_less = @all.where("cost <= ?", 700)
+
+    get '/api/v1/rented_accommodation?cost_more=700'
+    expect(response.status).to eq(200)
+    expect(JSON.parse(response.body).length).to eq(@cost_more.length)
+
+    get '/api/v1/rented_accommodation?cost_less=700'
+    expect(response.status).to eq(200)
+    expect(JSON.parse(response.body).length).to eq(@cost_less.length)
   end
 
   it "returns status 200 when get by id (show)" do
@@ -129,7 +146,7 @@ RSpec.describe "Api::V1::RentedAccommodations", type: :request do
       title: 'Random title',
       description: 'Random description',
       address: 'Address',
-      cost: 400.0,
+      cost: rand(1...1000),
       longitude: 80.0,
       latitude: 80.0,
       profile_id: @profile.id)
