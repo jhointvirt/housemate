@@ -8,7 +8,7 @@ class Api::V1::ProfileController < ApplicationController
   def update
     @profile = Profile.find(params[:id])
     if @profile[:user_id] != current_user.id
-      return render json: { message: "You don't have a permission" }, status: :forbidden
+      return render json: { message: 'Access denied' }, status: :forbidden
     end
 
     @result = @profile.update(profile_params)

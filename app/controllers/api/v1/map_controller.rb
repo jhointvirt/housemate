@@ -5,7 +5,7 @@ class Api::V1::MapController < ApplicationController
   end
 
   def show_by_place_name
-    render json: @map.search(q: params[:place_name], format: 'json', addressdetails: '1', accept_language: 'en'), status: :ok
+    render json: @map.search(q: params[:q], format: 'json', addressdetails: '1', accept_language: 'en'), status: :ok
   end
 
   def reverse_place_from_coordinate

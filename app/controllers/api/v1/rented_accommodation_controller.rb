@@ -1,8 +1,10 @@
+require './app/filters/rented_accommodation_module.rb'
 class Api::V1::RentedAccommodationController < ApplicationController
   before_action :current_user, except: [:index, :show]
+  include RentedAccommodationModule
 
   def index
-    render json: RentedAccommodation.all, status: :ok
+    render json: RentedAccommodationModule::Filter.new(nil, params).execute, status: :ok
   end
 
   def show

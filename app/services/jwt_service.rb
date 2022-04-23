@@ -19,7 +19,6 @@ class JwtService
   def refresh(params)
     begin
       @decoded_refresh_token = JWT.decode(params[:tokens][:refresh_token], Rails.application.credentials.dig(:jwt, :secret), 'HS256')[0]
-      @decoded_access_token = JWT.decode(params[:tokens][:access_token], Rails.application.credentials.dig(:jwt, :secret), 'HS256')[0]
       @token = RefreshToken.find_by(user_id: @decoded_refresh_token['data']['id'])
       unless @token
         return { not_refresh?: true, message: 'Token not found in DB' }

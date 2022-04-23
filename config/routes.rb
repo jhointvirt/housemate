@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       post 'map/reverse_place_from_coordinate', to: 'map#reverse_place_from_coordinate'
 
       get 'profile/show_by_current_user', to: 'profile#show_by_current_user'
-      get 'map/show_by_place_name/:place_name', to: 'map#show_by_place_name'
+      get 'map/show_by_place_name', to: 'map#show_by_place_name'
 
       put 'profile/:id', to: 'profile#update'
     end
