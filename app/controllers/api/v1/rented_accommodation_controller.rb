@@ -1,7 +1,5 @@
-require './app/filters/rented_accommodation_module.rb'
 class Api::V1::RentedAccommodationController < ApplicationController
   before_action :current_user, except: [:index, :show, :new]
-  include RentedAccommodationModule
   attr_accessor :map
 
   def initialize
@@ -10,7 +8,7 @@ class Api::V1::RentedAccommodationController < ApplicationController
   end
 
   def index
-    render json: RentedAccommodationModule::Filter.new(nil, params).execute, status: :ok
+    render json: RentedAccommodationFilter.new(nil, params).execute, status: :ok
   end
   
   def new
