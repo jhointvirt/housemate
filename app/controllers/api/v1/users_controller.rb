@@ -11,6 +11,8 @@ class Api::V1::UsersController < ApplicationController
       last_name: Faker::Name.last_name + '  - EXAMPLE',
       birthday_date: Date.today,
       gender: true)
+    
+    SendRegisterEmailJob.perform_later(@created_user.email)
 
     if @created_user.errors.empty?
       render json: @created_user, status: :ok

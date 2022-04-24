@@ -52,6 +52,21 @@ Rails.application.configure do
 
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_options = {from: 'no-reply@localhost.com'}
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              Rails.application.credentials.dig(:email, :address),
+    port:                 Rails.application.credentials.dig(:email, :port),
+    domain:               Rails.application.credentials.dig(:email, :domain),
+    user_name:            Rails.application.credentials.dig(:email, :user_name),
+    password:             Rails.application.credentials.dig(:email, :password),
+    authentication:       Rails.application.credentials.dig(:email, :authentication),
+    #enable_starttls_auto: true
+  }
+  
+  config.active_job.queue_adapter = :sidekiq
 
 
   # Raises error for missing translations.
