@@ -7,11 +7,25 @@ class Api::V1::ProfileController < ApplicationController
 
   def update
     @profile = Profile.find(params[:id])
-    if @profile[:user_id] != current_user.id
+    if @profile != current_profile
       return render json: { message: 'Access denied' }, status: :forbidden
     end
 
     @result = @profile.update(profile_params)
+    if @result
+      render json: @result, status: :ok
+    else
+      render json: @result, status: :bad_request
+    end
+  end
+
+  def update_avatar
+    @profile = Profile.find(params[:id])
+    if @profile != current_profile
+      return render json: { message: 'Access denied' }, status: :forbidden
+    end
+
+    @result = @profile.update(avatar: params[:avatar])
     if @result
       render json: @result, status: :ok
     else

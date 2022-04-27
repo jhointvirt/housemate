@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       get 'map/show_by_place_name', to: 'map#show_by_place_name'
 
       put 'profile/:id', to: 'profile#update'
+      put 'profile/update_avatar/:id', to: 'profile#update_avatar'
     end
   end
 end
