@@ -46,7 +46,8 @@ RSpec.describe "Api::V1::RentedAccommodations", type: :request do
       address: 'Address',
       cost: 400.0,
       longitude: 80.0,
-      latitude: 80.0
+      latitude: 80.0,
+      link: 'example.com'
     }}
 
     expect(response.status).to eq(200)
@@ -63,7 +64,8 @@ RSpec.describe "Api::V1::RentedAccommodations", type: :request do
       address: 'Address',
       cost: 400.0,
       longitude: 80.0,
-      latitude: 80.0
+      latitude: 80.0,
+      link: 'example.com'
     }}
 
     expect(response.status).to eq(200)
@@ -79,7 +81,8 @@ RSpec.describe "Api::V1::RentedAccommodations", type: :request do
       address: 'Address',
       cost: 400.0,
       longitude: 181.0,
-      latitude: 91.0
+      latitude: 91.0,
+      link: 'example.com'
     }}
 
     expect(response.status).to eq(400)
@@ -99,7 +102,8 @@ RSpec.describe "Api::V1::RentedAccommodations", type: :request do
       address: 'Address',
       cost: 400.0,
       longitude: 181.0,
-      latitude: 91.0
+      latitude: 91.0,
+      link: 'example.com'
     }}
 
     expect(response.status).to eq(400)
@@ -112,7 +116,8 @@ RSpec.describe "Api::V1::RentedAccommodations", type: :request do
       address: 'Address',
       cost: 400.0,
       longitude: 80.0,
-      latitude: 80.0
+      latitude: 80.0,
+      link: 'example.com'
     }}
 
     expect(response.status).to eq(401)
@@ -129,7 +134,8 @@ RSpec.describe "Api::V1::RentedAccommodations", type: :request do
       address: 'Address',
       cost: 400.0,
       longitude: 80.0,
-      latitude: 80.0
+      latitude: 80.0,
+      link: 'example.com'
     }}
 
     expect(response.status).to eq(401)
@@ -156,7 +162,6 @@ RSpec.describe "Api::V1::RentedAccommodations", type: :request do
 
   def generate_rented_accommodation
     @user = create_user_with_profile
-    @profile = Profile.find_by(user_id: @user[:id])
     RentedAccommodation.create(
       title: 'Random title',
       description: 'Random description',
@@ -164,6 +169,7 @@ RSpec.describe "Api::V1::RentedAccommodations", type: :request do
       cost: rand(1...1000),
       longitude: 80.0,
       latitude: 80.0,
-      profile_id: @profile.id)
+      profile_id: @user.profile.id,
+      link: 'example.com')
   end
 end

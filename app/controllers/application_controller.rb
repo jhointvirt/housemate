@@ -16,6 +16,6 @@ class ApplicationController < ActionController::API
   end
 
   def current_profile
-    Profile.find_by(user_id: current_user.id) if current_user
+    current_user.profile if current_user
   end
 end

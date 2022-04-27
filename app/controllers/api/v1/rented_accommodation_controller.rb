@@ -60,6 +60,6 @@ class Api::V1::RentedAccommodationController < ApplicationController
   private
 
   def rented_accommodation_params
-    params.require(:rented_accommodation).permit(:title, :description, :address, :cost, :longitude, :latitude, :house_number, :city, :country, :country_code, :profile_id)
+    params.require(:rented_accommodation).permit(:title, :description, :address, :cost, :longitude, :latitude, :house_number, :city, :country, :country_code, :link, :profile_id)
   end
 end

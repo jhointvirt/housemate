@@ -9,4 +9,5 @@ class RentedAccommodation < ApplicationRecord
   validates :description, presence: true
   validates :address, presence: true
   validates :cost, presence: true
+  validates :link, presence: true
 end
