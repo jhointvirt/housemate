@@ -72,7 +72,7 @@ RSpec.describe "Api::V1::Profiles", type: :request do
     @user = create_and_get_current_user_with_access_token
     @headers = { "Authorization": "Bearer " + @user[:token] }
     @profile = Profile.find_by(user_id: @user[:user][:id].to_i)
-    put '/api/v1/profile/update_avatar/' + @profile[:id].to_s, :headers => @headers, :params => { avatar: Rack::Test::UploadedFile.new('spec/images/test.jpg', 'image/jpg') }
+    put '/api/v1/profile/update_avatar/' + @profile[:id].to_s, :headers => @headers, :params => { avatar: Rack::Test::UploadedFile.new('spec/images/test.jpg') }
     expect(response.status).to eq(200)
   end
 end
