@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
   def current_user
     begin
       unless request.headers[:Authorization]
-        return render json: { exception: "Unauthorized" }, status: 401
+        return render json: { exception: "Unauthorized" }, status: :unauthorized
       end
 
       @token = request.headers[:Authorization].split(" ")[1]
@@ -11,7 +11,7 @@ class ApplicationController < ActionController::API
         User.find(@data['data']['id'].to_i)
       end
     rescue JWT::ExpiredSignature => exception
-      render json: { exception: exception }, status: :not_found
+      return render json: { exception: exception }, status: :unauthorized
     end
   end
 

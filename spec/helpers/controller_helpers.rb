@@ -24,3 +24,16 @@ end
 def get_payload(email, id)
   { data: { email: email, id: id }, exp: Time.now.to_i + Rails.application.credentials.dig(:jwt, :expire_access_in_seconds) }
 end
+
+def generate_rented_accommodation
+  @user = create_user_with_profile
+  RentedAccommodation.create(
+    title: 'Random title',
+    description: 'Random description',
+    address: 'Address',
+    cost: rand(1...1000),
+    longitude: 80.0,
+    latitude: 80.0,
+    profile_id: @user.profile.id,
+    link: 'example.com')
+end

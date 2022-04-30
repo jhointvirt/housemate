@@ -157,19 +157,4 @@ RSpec.describe "Api::V1::RentedAccommodations", type: :request do
     expect(@body['longitude']).to eq('28.43220800399061')
     expect(@body['latitude']).to eq('49.2310982')
   end
-
-  private 
-
-  def generate_rented_accommodation
-    @user = create_user_with_profile
-    RentedAccommodation.create(
-      title: 'Random title',
-      description: 'Random description',
-      address: 'Address',
-      cost: rand(1...1000),
-      longitude: 80.0,
-      latitude: 80.0,
-      profile_id: @user.profile.id,
-      link: 'example.com')
-  end
 end
