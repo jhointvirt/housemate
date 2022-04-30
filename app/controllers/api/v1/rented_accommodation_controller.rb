@@ -57,6 +57,15 @@ class Api::V1::RentedAccommodationController < ApplicationController
     end
   end
 
+  def respond_to_rentals
+    @rented_accommodation = RentedAccommodation.find(params[:id])
+    if (@rented_accommodation.profile_id == current_profile.id)
+      return render json: { message: 'You can''t respond to your own rented accommodation' }, status: :bad_request
+    end
+
+    
+  end
+
   private
 
   def rented_accommodation_params
