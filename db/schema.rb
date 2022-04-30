@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_24_170738) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_28_151703) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -63,6 +63,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_24_170738) do
     t.index ["user_id"], name: "index_refresh_tokens_on_user_id"
   end
 
+  create_table "rented_accommodation_responses", force: :cascade do |t|
+    t.bigint "profile_id", null: false
+    t.bigint "rented_accommodation_id", null: false
+    t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_rented_accommodation_responses_on_profile_id"
+    t.index ["rented_accommodation_id"], name: "index_rented_accommodation_responses_on_rented_accommodation_id"
+  end
+
   create_table "rented_accommodations", force: :cascade do |t|
     t.string "title", null: false
     t.string "address", null: false
@@ -93,5 +103,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_24_170738) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "profiles", "users"
   add_foreign_key "refresh_tokens", "users"
+  add_foreign_key "rented_accommodation_responses", "profiles"
+  add_foreign_key "rented_accommodation_responses", "rented_accommodations"
   add_foreign_key "rented_accommodations", "profiles"
 end
