@@ -14,7 +14,8 @@ Rails.application.routes.draw do
 
       get 'profile/show_by_current_user', to: 'profile#show_by_current_user'
       get 'map/show_by_place_name', to: 'map#show_by_place_name'
-      get 'rented_accommodation_response/show_by_current_user', to: 'rented_accommodation_response#show_by_current_user'
+      get 'rented_accommodation_response/show_my_responses', to: 'rented_accommodation_response#show_my_responses'
+      get 'rented_accommodation_response/get_responses_on_my_accommodation', to: 'rented_accommodation_response#get_responses_on_my_accommodation'
 
       put 'profile/:id', to: 'profile#update'
       put 'profile/update_avatar/:id', to: 'profile#update_avatar'

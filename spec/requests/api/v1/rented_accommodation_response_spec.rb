@@ -32,7 +32,7 @@ RSpec.describe "Api::V1::RentedAccommodationResponses", type: :request do
     @all = @first_user.profile.rented_accommodation_response
     @headers = { "Authorization": "Bearer " + get_access_token(@first_user) }
 
-    get '/api/v1/rented_accommodation_response/show_by_current_user', :headers => @headers
+    get '/api/v1/rented_accommodation_response/show_my_responses', :headers => @headers
     expect(response.status).to eq(200)
     expect(response.body).to eq(@all.to_json)
     expect(2).to eq(@all.length)
@@ -86,6 +86,23 @@ RSpec.describe "Api::V1::RentedAccommodationResponses", type: :request do
       rented_accommodation_id: @rented_accommodation.id
     }}
     expect(response.status).to eq(200)
+  end
+
+  it 'returns status 200 when get responses on my accommodation' do
+    @rented_accommodation = generate_rented_accommodation
+    @user = create_user_with_profile
+
+    @headers = { "Authorization": "Bearer " + get_access_token(@user) }
+
+    get '/api/v1/rented_accommodation_response/get_responses_on_my_accommodation', :headers => @headers, :params => { rented_accommodation_response: {
+      rented_accommodation_id: @rented_accommodation.id
+    }}
+    expect(response.status).to eq(200)
+  end
+
+  it 'returns status 401 when get responses on my accommodation' do
+    get '/api/v1/rented_accommodation_response/get_responses_on_my_accommodation', :headers => nil, :params => { rented_accommodation_response: {} }
+    expect(response.status).to eq(401)
   end
 
   private 
