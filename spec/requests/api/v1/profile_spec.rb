@@ -68,7 +68,7 @@ RSpec.describe "Api::V1::Profiles", type: :request do
     expect(@body['message']).to eq("Access denied")
   end
 
-  it "returns status 200 when update" do
+  it "returns status 200 when update avatar" do
     @user = create_and_get_current_user_with_access_token
     @headers = { "Authorization": "Bearer " + @user[:token] }
     @profile = Profile.find_by(user_id: @user[:user][:id].to_i)

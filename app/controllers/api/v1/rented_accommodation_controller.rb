@@ -37,7 +37,6 @@ class Api::V1::RentedAccommodationController < ApplicationController
     @rented_accommodation.save
 
     if @rented_accommodation.errors.empty?
-      p RentedAccommodation.find(@rented_accommodation.id).photos_attachments
       render json: @rented_accommodation, status: :ok
     else
       render json: @rented_accommodation.errors, status: :bad_request
