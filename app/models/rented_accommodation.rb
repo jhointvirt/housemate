@@ -1,5 +1,6 @@
 class RentedAccommodation < ApplicationRecord
   has_many :rented_accommodation_response
+  has_many_attached :photos
   belongs_to :profile
   validates_numericality_of :latitude
   validates_numericality_of :longitude

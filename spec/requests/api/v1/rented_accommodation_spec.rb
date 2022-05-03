@@ -47,9 +47,12 @@ RSpec.describe "Api::V1::RentedAccommodations", type: :request do
       cost: 400.0,
       longitude: 80.0,
       latitude: 80.0,
-      link: 'example.com'
+      link: 'example.com',
+      photos: [Rack::Test::UploadedFile.new('spec/images/test.jpg'), Rack::Test::UploadedFile.new('spec/images/test.jpg')]
     }}
-
+    
+    length = RentedAccommodation.find(JSON.parse(response.body)['id']).photos_attachments.length
+    expect(length).to eq(2)
     expect(response.status).to eq(200)
   end
 
