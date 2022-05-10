@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Api::V1::Auths", type: :request do
   before(:all) do
-    User.create(email: 'example@example.com', password: 'StrongPass')
+    User.create(email: 'example@example.com', password: 'StrongPass', confirmation_link: 'confirmation_link')
   end
 
   it "returns tokens and 200 status code when login" do

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe RefreshToken, type: :model do
   before(:each) do 
-    @user = User.create(email: Faker::Internet.email, password: 'StrongPass')
+    @user = User.create(email: Faker::Internet.email, password: 'StrongPass', confirmation_link: 'confirmation link')
     @payload = {
       data: { email: @user.email, id: @user.id },
       exp: Time.now.to_i + Rails.application.credentials.dig(:jwt, :expire_access_in_seconds)

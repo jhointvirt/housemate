@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Profile, type: :model do
   before(:each) do
-    @user = User.create(email: Faker::Internet.email, password: 'StrongPass')
+    @user = User.create(email: Faker::Internet.email, password: 'StrongPass', confirmation_link: 'confirmation link')
     @profile = @user.build_profile(
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,

@@ -12,7 +12,7 @@ def create_and_get_current_user_with_access_token
 end
 
 def create_user_with_profile
-  @created_user = User.create(email: Faker::Internet.email, password: 'StrongPaasss')
+  @created_user = User.create(email: Faker::Internet.email, password: 'StrongPaasss', confirmation_link: 'confirmation link')
   @created_user.create_profile(
     first_name: Faker::Name.first_name + ' - EXAMPLE',
     last_name: Faker::Name.last_name + '  - EXAMPLE',
